@@ -1,7 +1,7 @@
 <?php
-namespace App\Wordless;
+namespace App\Handlers\Responses;
 
-class CountMatchesResponse 
+class QueryMatchCountResponse 
 {
      public int $count;
 

@@ -1,5 +1,5 @@
 <?php
-namespace App\Wordless;
+namespace App\Handlers\Responses;
 
 class GetWordResponse 
 {
