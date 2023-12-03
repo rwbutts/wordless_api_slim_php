@@ -40,6 +40,7 @@ class ErrorHandler
           }
        
           $payload = ['error' => $exception->getMessage()];
+          $payload['details'] = $exception->__toString();
        
           $response = $this->app
                ->getResponseFactory()

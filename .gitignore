@@ -2,3 +2,6 @@
 *.log
 *.tmp
 composer.lock
+/public/
+!/public/index.php
+

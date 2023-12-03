@@ -12,9 +12,9 @@ class QueryMatchCountHandler extends HandlerBase
      public function __invoke( Request $request, Response $response )
      {
           $params = $request->getParsedBody();
-          if( !is_array($params) || !$params['answer'] || !$params['guesses'] )
+          if( !is_array($params)|| !$params['answer'] || !$params['guesses'] )
           {
-               throw new HandlerException(HandlerException::CODE_400_BADREQUEST, 'Bad request');
+               throw new HandlerException(message: gettype($params??1),httpCode : HandlerException::CODE_401_UNAUTHORIZED, httpReasonPhrase : 'Bad request');
           }
      
           $count = WordUtils::CountMatches( WordUtils::WORDLIST, $params['answer'], $params['guesses'] );

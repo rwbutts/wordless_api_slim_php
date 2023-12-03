@@ -40,7 +40,7 @@ class WordUtils
           return $guessChar == substr( $testWord, $charIndex, 1 );
      }
  
-     private function MatchesYellow( string $testWord, string $guessChar, int $charIndex ) : bool
+     private static function MatchesYellow( string $testWord, string $guessChar, int $charIndex ) : bool
      {
           return !self::MatchesGreen( $testWord, $guessChar, $charIndex ) && stristr( $testWord, $guessChar ) !== false;
      }

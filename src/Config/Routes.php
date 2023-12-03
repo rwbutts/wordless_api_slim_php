@@ -5,7 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Handlers\GetWordHandler;
 use App\Handlers\CheckWordHandler;
-use App\Handlers\CountMatchesResponse;
+use App\Handlers\QueryMatchCountHandler;
 
 
 return function ( \Slim\App $app )
@@ -19,7 +19,7 @@ return function ( \Slim\App $app )
      
      $app->get('/checkword/{word}', CheckWordHandler::class );
      
-     $app->post('/querymatchcount', CountMatchesResponse::class );
+     $app->post('/querymatchcount', QueryMatchCountHandler::class );
      
 }
 ?>

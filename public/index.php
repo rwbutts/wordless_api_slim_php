@@ -8,7 +8,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
-
+$app->addBodyParsingMiddleware();
 $errorMiddlware = $app->addErrorMiddleware( true, true, true );
 $errorMiddlware->setDefaultErrorHandler( new ErrorHandler( $app ) );
 // Register routes
