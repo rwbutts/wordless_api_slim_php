@@ -28,6 +28,7 @@ class ErrorHandler
      {
           $code = 500;
           $reasonPhrase = 'Unhandled exception';
+          
           if( $exception instanceof HandlerException )
           {
                $code = $exception->getHttpCode();
@@ -52,7 +53,7 @@ class ErrorHandler
                json_encode($payload, JSON_UNESCAPED_UNICODE)
           );
        
-           return $response;
+          return $response;
      }
 }
 

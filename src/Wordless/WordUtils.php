@@ -42,7 +42,8 @@ class WordUtils
  
      private static function MatchesYellow( string $testWord, string $guessChar, int $charIndex ) : bool
      {
-          return !self::MatchesGreen( $testWord, $guessChar, $charIndex ) && stristr( $testWord, $guessChar ) !== false;
+          return !self::MatchesGreen( $testWord, $guessChar, $charIndex ) 
+               && stristr( $testWord, $guessChar ) !== false;
      }
 
      private static function IsWordCompatibleWithClues( string $testWord, string $answer, string $guess )
@@ -72,7 +73,7 @@ class WordUtils
                {
                     // letter c is not in answer. Is it in the Candidate? 
                     // Reject if it is.
-                    if( stristr( $testWord, $c ) === false )
+                    if( stristr( $testWord, $c ) !== false )
                     {
                          return false;
                     }
