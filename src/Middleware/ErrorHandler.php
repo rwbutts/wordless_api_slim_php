@@ -5,8 +5,7 @@ namespace App\Middleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
-use App\Exception\HandlerException;
-
+use Slim\Exception\HttpException;
 
 class ErrorHandler 
 {
@@ -26,22 +25,33 @@ class ErrorHandler
           ?LoggerInterface $logger = null
      )
      {
-          $code = 500;
-          $reasonPhrase = 'Unhandled exception';
-          
-          if( $exception instanceof HandlerException )
+          $payload = [];
+
+          if( $exception instanceof HttpException )
           {
-               $code = $exception->getHttpCode();
-               $reasonPhrase = $exception->getHttpReasonPhrase();
+               $code = $exception->getCode();
+               $payload['description'] = $exception->getDescription();
+               $reasonPhrase = $exception->getMessage();
+          }
+          else
+          {
+               $reasonPhrase = 'internal server error: ' .  $exception->getMessage();
+               $code = 500;
           }
 
-          if ($logger) 
+          $payload =  [ 'error' => $reasonPhrase, 'code' => $code, ];
+
+          if ( $logErrors && $logger ) 
           {
-               $logger->error($exception->getMessage());
-          }
+               $logErrorDetails 
+                    ? $logger->error( $exception->__toString() )
+                    : $logger->error( $exception->getMessage() );
+               }
        
-          $payload = ['error' => $exception->getMessage()];
-          $payload['details'] = $exception->__toString();
+          if( $displayErrorDetails )
+          {
+               $payload['details'] = $exception->__toString();
+          }
        
           $response = $this->app
                ->getResponseFactory()
@@ -50,7 +60,7 @@ class ErrorHandler
                ->withHeader( 'Content-Type', 'application/json' );
 
           $response->getBody()->write(
-               json_encode($payload, JSON_UNESCAPED_UNICODE)
+               json_encode($payload, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)
           );
        
           return $response;

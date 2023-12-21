@@ -8,7 +8,7 @@ use App\Handlers\Responses\CheckWordResponse;
 
 class CheckWordHandler extends HandlerBase
 {
-     public function __invoke( Request $request, Response $response, array $args  )
+     public function handle( Request $request, Response $response, array $args  )  : Response
      {
           $exists = WordUtils::WordExists( $args[ 'word' ] );
           return $this->JsonResponse(new CheckWordResponse( $exists ));

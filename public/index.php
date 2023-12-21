@@ -1,7 +1,7 @@
 <?php
 use Slim\Factory\AppFactory;
 use App\Middleware\ErrorHandler;
-
+use App\Config\Config;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -9,15 +9,11 @@ require __DIR__ . '/../vendor/autoload.php';
 $app = AppFactory::create();
 
 $app->addBodyParsingMiddleware();
-$errorMiddlware = $app->addErrorMiddleware( true, true, true );
+$errorMiddlware = $app->addErrorMiddleware( false, true, true );
 $errorMiddlware->setDefaultErrorHandler( new ErrorHandler( $app ) );
-// Register routes
-$routes = require __DIR__ . '/../src/Config/Routes.php';
-$routes($app);
+
+Config::getSetting('routes')( $app );
 
 $app->run();
-
-
-
 
 ?>

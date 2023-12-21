@@ -46,7 +46,7 @@ class WordUtils
                && stristr( $testWord, $guessChar ) !== false;
      }
 
-     private static function IsWordCompatibleWithClues( string $testWord, string $answer, string $guess )
+     private static function IsWordCompatibleWithClues( string $testWord, string $answer, string $guess ) : bool
      {
           for( $i = 0; $i < strlen($testWord); $i++ )
           {
@@ -83,7 +83,7 @@ class WordUtils
           return true;
      }
 
-     public static function CountMatches( array $candidates, string $answer, array $guesses )
+     public static function CountMatches( array $candidates, string $answer, array $guesses ) : int
      {
           $matchCount = 0;
 

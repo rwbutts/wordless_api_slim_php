@@ -8,7 +8,7 @@ use App\Handlers\Responses\GetWordResponse;
 
 class GetWordHandler extends HandlerBase
 {
-     public function __invoke( Request $request, Response $response, array $args  )
+     public function handle( Request $request, Response $response, array $args  ) : Response
      {
           //throw new HandlerException();
           $word = WordUtils::TodaysWord( (int)$args[ 'index'] );

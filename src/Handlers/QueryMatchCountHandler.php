@@ -1,7 +1,7 @@
 <?php
 namespace App\Handlers;
 
-use App\Exception\BadRequestException;
+use Slim\Exception\HttpBadRequestException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Wordless\WordUtils;
@@ -9,12 +9,12 @@ use App\Handlers\Responses\QueryMatchCountResponse;
 
 class QueryMatchCountHandler extends HandlerBase
 {
-     public function __invoke( Request $request, Response $response )
+     public function handle( Request $request, Response $response, array $args ) : Response
      {
           $params = $request->getParsedBody();
-          if( !is_array($params)|| !$params['answer'] || !$params['guesses'] )
+          if( !is_array( $params ) || !array_key_exists( 'answer', $params ) || !array_key_exists( 'guesses', $params ) )
           {
-               throw new BadRequestException( message: 'Malformed QueryMatchCountHandler parameters' );
+               throw new HttpBadRequestException( request: $request, message: 'malformed QueryMatchCount request body' );
           }
      
           $count = WordUtils::CountMatches( WordUtils::WORDLIST, $params['answer'], $params['guesses'] );
