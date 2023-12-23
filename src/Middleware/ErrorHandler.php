@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpException;
+use App\Handlers\HandlerBase;
 
 class ErrorHandler 
 {
@@ -54,17 +55,18 @@ class ErrorHandler
                }
        
        
-          $response = $this->app
+          $response = 
+               $this->app
                ->getResponseFactory()
                ->createResponse()
                ->withStatus( $code, $reasonPhrase )
                ->withHeader( 'Content-Type', 'application/json' );
 
-          $response->getBody()->write(
-               json_encode($payload, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)
-          );
+          $response
+               ->getBody()
+               ->write( json_encode( $payload, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR ) );
        
-          return $response;
+          return HandlerBase::appendVersionResponseHeader( $response );
      }
 }
 
