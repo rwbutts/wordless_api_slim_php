@@ -6,7 +6,7 @@ use App\Handlers\QueryMatchCountHandler;
 
 
 return [ 
-        'api_version' => '1.1.0',
+        'api_version' => '1.1.1',
         'routes'  => function ( \Slim\App $app ) {
                     // $app->options('/{routes:.*}', function ( Request $request, Response $response ) {
                     //      // CORS Pre-Flight OPTIONS Request Handler

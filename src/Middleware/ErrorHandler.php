@@ -30,16 +30,21 @@ class ErrorHandler
           if( $exception instanceof HttpException )
           {
                $code = $exception->getCode();
-               $payload['description'] = $exception->getDescription();
                $reasonPhrase = $exception->getMessage();
+               $payload['description'] = $exception->getDescription();
           }
           else
           {
                $reasonPhrase = 'internal server error: ' .  $exception->getMessage();
-               $code = 500;
+               $code  = 500;
           }
+          $payload['code'] = $code;
+          $payload['error'] = $reasonPhrase;
 
-          $payload =  [ 'error' => $reasonPhrase, 'code' => $code, ];
+          if( $displayErrorDetails )
+          {
+               $payload['details'] = $exception->__toString();
+          }
 
           if ( $logErrors && $logger ) 
           {
@@ -48,10 +53,6 @@ class ErrorHandler
                     : $logger->error( $exception->getMessage() );
                }
        
-          if( $displayErrorDetails )
-          {
-               $payload['details'] = $exception->__toString();
-          }
        
           $response = $this->app
                ->getResponseFactory()
